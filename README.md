@@ -1,4 +1,11 @@
-Model of 2 wheeled line following robot.
+# Model of 2 wheeled Line Following Robot
+To use:
+* [runsim.m](runsim.m) is the main script. Robot, sensor and controller attributes are edited here, as well as the simulation loop, and any plotting. To use this simulation, edit and run this script.
+* [Contoller.m](Controller.m) is the class for the PID controller
+* [DDR.m](DDR.m) is the class used to calculate differential drive vehicle kinematics
+* [IR_sensor.m](IR_sensor.m) is the class used to sense where the robot is relative to the track
+* [LineConstruct.m](LineConstruct.m) is the class used to build the track for the robot to follow 
+
 
 ## **Required Attributes:**
 **Robot Attributes**
