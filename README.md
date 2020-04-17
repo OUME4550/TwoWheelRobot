@@ -6,9 +6,11 @@ Model of 2 wheeled line following robot.
 * Wheel Radius of robot (cm)
 * Track width of robot (cm)
 * Starting Position of robot (cm)
+
 **Sensor Attributes**
 * Width of Sensor (cm)
 * Distance of sensor from the robot (cm)
+
 **Controller Attributes**
 * Kp (Proportional Gain)
 * Ki (Integral Gain)
