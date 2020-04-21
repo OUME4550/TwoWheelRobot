@@ -8,8 +8,8 @@ controllerdt = simdt*2;
 line = LineConstruct;
 % line = line.buildSine();
 % line = line.buildCircle();
-% line = line.buildLine();
-line = line.buildTrack();
+line = line.buildLine();
+% line = line.buildTrack();
 
 
 
@@ -19,15 +19,14 @@ robot = DDR;
 %cm/s
 robot.baseSpd = 1;       % Robot Base Speed
 %cm
-robot.r = 2;                % Wheel Radius
-robot.L = 2;                % Wheel Axle Length
+robot.WheelRadius = 2;                % Wheel Radius
+robot.AxelLen = 2;                % Wheel Axle Length
 %Starting Position
 %cm
 robot.x = 50;  
 robot.y = 48;
 
 %radians
-robot.phi = 0;              
 robot.theta = deg2rad(5);                
 robot.dt = simdt;            % Time step
 
@@ -69,14 +68,9 @@ while i < 1500
         else
             newDiffSpeedControl = 0;
         end
-
-        %update the robot wheel speeds using base and diff speeds
-        robot.vr = robot.baseSpd + newDiffSpeedControl;
-        robot.vrs = [robot.vrs, robot.vr];
-        robot.vL = robot.baseSpd - newDiffSpeedControl;
-        robot.vLs = [robot.vLs, robot.vL];
+      
         %update kinematics (move the robot)
-        robot = robot.DDR_Kinematics();       
+        robot = robot.DDR_Kinematics(robot.baseSpd, newDiffSpeedControl);       
     end
         
     if(mod(i,5)==0)

@@ -1,32 +1,19 @@
 classdef DDR
     %DDR class for two wheel Differential Drive Robot (DDR)
-  
-    
+     
     properties
-        r       % DDR wheel radius (in)
-        L        % DDR axle lenght  (in)
-        
+        WheelRadius       % DDR wheel radius (in)
+        AxelLen        % DDR axle lenght  (in)
+         
         x             % x-coordinate of center axel of DDR
         y             % y-coordinate of center axel of DDR
-        LastX = []
-        LastY = []
         
-        phi         % Rotation about the center of the DDR's axel
-        LastPhi = []
-
+        x_history = []
+        y_history = []
+        
         theta       % Direction of travel for the DDR
-        LastTheta = []
         
         baseSpd
-        vr      % DDR right wheel vel
-        vrs = []
-        vL      % DDR left wheel vel
-        vLs = []
-        vx      % DDR axel velocity x-component
-        vy      % DDR axel velocity y-component
-        
-        Vtot   % total Velocity
-        vs = [] % record velocity 
         
         dt     % time step               
         
@@ -34,42 +21,29 @@ classdef DDR
     
     methods % DDR Kinematics
        
-        function obj = DDR_Kinematics(obj)
-            % Update Inertial coordinates
-            obj.phi = obj.r *(obj.vr-obj.vL)/(2*obj.L);
+        function obj = DDR_Kinematics(obj, baseSpeed, diffW)
+            vr = baseSpeed + diffW;
+            vl = baseSpeed - diffW;
+            phi = obj.WheelRadius *(vr-vl)/(2*obj.AxelLen);
 
-            obj.LastTheta = obj.theta;
-            obj.theta = obj.LastTheta + obj.phi;
-%             obj.theta = mod(obj.theta,360);
-            obj.vx = (obj.r/2)*(obj.vr+obj.vL)*cos(obj.theta);
-            obj.vy = (obj.r/2)*(obj.vr+obj.vL)*sin(obj.theta);
+            th = obj.theta + phi;
+            % obj.theta = mod(obj.theta,360);
+            vx = (obj.WheelRadius/2)*(vr+vl)*cos(th);
+            vy = (obj.WheelRadius/2)*(vr+vl)*sin(th);
 
             % Update position of robot in Inertial frame
-            obj.LastX = obj.x;
-            obj.LastY = obj.y;
-        
-            obj.x = obj.LastX + obj.vx*obj.dt;
-            obj.y = obj.LastY + obj.vy*obj.dt;
-        
-            obj.Vtot = sqrt(obj.vx^2 + obj.vy^2);
-            obj.vs = [obj.vs, obj.Vtot];
+            obj.x = obj.x + vx*obj.dt;
+            obj.y = obj.y + vy*obj.dt;
+            %save path
+            obj.x_history = [obj.x_history, obj.x];
+            obj.y_history = [obj.y_history, obj.y];
+            obj.theta = th;
         end 
         
         function obj = continueKinematicsWithHeading(obj)  
-            obj.vr = obj.baseSpd;
-            obj.vrs = [obj.vrs, obj.vr];
-            obj.vL = obj.baseSpd;
-            obj.vLs = [obj.vLs, obj.vL];
-
-            obj = obj.DDR_Kinematics();                                            
+            obj = obj.DDR_Kinematics(obj.baseSpd, 0);                                            
         end
-        
-        function obj = plots(obj)
-            figure
-            plot(1:1:length(obj.vs),obj.vs, 1:1:length(obj.vrs),obj.vrs, 1:1:length(obj.vLs),obj.vLs); grid on;
-            ylabel('Velocity');
-            xlabel('Time (sec)');
-        end               
+             
     end
     
 end
