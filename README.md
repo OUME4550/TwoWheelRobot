@@ -6,9 +6,8 @@ To use:
 * [IR_sensor.m](IR_sensor.m) is the class used to sense where the robot is relative to the track
 * [LineConstruct.m](LineConstruct.m) is the class used to build the track for the robot to follow 
 
-[Video of line following - whole track](https://vimeo.com/405101388)
-
-[Video of line following - robot following](https://vimeo.com/405117603)
+<img src="docs/LineFollowTrack.gif" width="300"><br>
+<img src="docs/LineFollowTrackFull.gif" width="300">
 
 ## **Required Attributes:**
 **Robot Attributes**
