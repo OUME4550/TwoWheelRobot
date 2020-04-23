@@ -66,8 +66,10 @@ classdef LineConstruct
 %             pathTheta = linspace(obj.start,obj.lineEnd,obj.step);   % theta values - realy for the cos and sin fuctions
 %             obj.Linex = -pathTheta;
 %             obj.Liney = pathTheta;
-              obj.Linex = [0 1000];
-              obj.Liney = [50 50];
+%               obj.Linex = [0 1000];
+%               obj.Liney = [50 50];
+              obj.Linex = linspace(0,1000,1000);
+              obj.Liney = 50*ones(1,1000);
         end
         
         

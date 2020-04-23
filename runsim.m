@@ -2,14 +2,14 @@
 clear variables; close all;
 
 %seconds
-simdt = 0.1;
-controllerdt = simdt*2;
+simdt = 0.01;
+controllerdt = simdt*3;
 %% Path for Line follower
 line = LineConstruct;
 % line = line.buildSine();
 % line = line.buildCircle();
 line = line.buildLine();
-% line = line.buildTrack();
+line = line.buildTrack();
 
 
 
@@ -17,7 +17,7 @@ line = line.buildLine();
 robot = DDR; 
 
 %cm/s
-robot.baseSpd = 1;       % Robot Base Speed
+robot.baseSpd = 5;       % Robot Base Speed
 %cm
 robot.WheelRadius = 2;                % Wheel Radius
 robot.AxelLen = 2;                % Wheel Axle Length
@@ -39,22 +39,23 @@ sensor = IR_sensor;
 
 %% PID Controller
 controller = Controller;
-controller.kp = 0.5;             % Proportional 
+controller.kp = 0.05;             % Proportional 
 controller.ki = 0.1;             % Integral
 controller.kd = 0.01;              % Derivative
 controller.dt = controllerdt;
 controller.setpoint = 0;
-controller.saturationLimit = 0.5;
+controller.saturationLimit = 0.25;
 fig1=figure;hold all;
 
 graphZoomOnRobot = true;
 
 i = 1;
-while i < 1500
+t=0:simdt:30;
+for i=1:length(t)
     %do a sensor reading to get data
     sensor = sensor.buildSensor(robot.x, robot.y, robot.theta, SensorWidth, SensorDistanceFromRobotCenter);
     sensorReading = sensor.readBar( line.Linex, line.Liney);
-    
+    sensorHistory(i) = sensorReading;
     %no sensor data, so keep going straight or stop
     if sensorReading == -1
         robot = robot.continueKinematicsWithHeading();

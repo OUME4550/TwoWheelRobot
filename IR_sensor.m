@@ -37,6 +37,7 @@ classdef IR_sensor
                 Pb = [obj.bar(1,3);obj.bar(2,3)];
                 D = pdist([Q';Pb'],'euclidean');
                 D = D - obj.Length/2;
+                D = D(1); %sometimes > 1 solution, dump others
             else
                 D = -1;
             end
