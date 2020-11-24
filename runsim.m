@@ -8,7 +8,7 @@ controllerdt = simdt*3;
 line = LineConstruct;
 % line = line.buildSine();
 % line = line.buildCircle();
-line = line.buildLine();
+% line = line.buildLine();
 line = line.buildTrack();
 
 
@@ -60,7 +60,7 @@ for i=1:length(t)
     if sensorReading == -1
         robot = robot.continueKinematicsWithHeading();
         disp('cannot find the line');
-        break;
+        %break;
     else %on the line, need some control guidance!
         controller = controller.Update(sensorReading, i*simdt);
         requestedDiff = controller.GetNewControlValue();

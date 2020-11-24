@@ -51,15 +51,16 @@ classdef LineConstruct
         function obj = buildSine(obj)
 
             pathTheta = linspace(obj.start,obj.lineEnd,obj.step);
-            obj.Liney = pathTheta;
-            obj.Linex = 2*sin(pathTheta);
+            obj.Liney = 15*sin(0.1*pathTheta)+45;
+            obj.Linex = pathTheta;
             
         end
     
         function obj = buildCircle(obj)
+            radius = 20;
             pathTheta = linspace(0*pi/180, 360*pi/180, 360);
-            obj.Linex = 10*sin(pathTheta);
-            obj.Liney = 10*cos(pathTheta);        
+            obj.Linex = radius*sin(pathTheta)+50;
+            obj.Liney = radius*cos(pathTheta)+65;        
         end
         
         function obj = buildLine(obj)
