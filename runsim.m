@@ -2,8 +2,8 @@
 clear variables; close all;
 
 %seconds
-simdt = 0.01;
-controllerdt = simdt*3;
+simdt = 0.001;
+controllerdt = simdt;
 %% Path for Line follower
 line = LineConstruct;
 % line = line.buildSine();
@@ -15,9 +15,9 @@ line = line.buildTrack();
 
 %% Line Follower Robot 
 robot = DDR; 
-
+robot = robot.EnableAcutatorDelay(1/simdt);
 %cm/s
-robot.baseSpd = 5;       % Robot Base Speed
+robot.baseSpd = 15;       % Robot Base Speed
 %cm
 robot.WheelRadius = 2;                % Wheel Radius
 robot.AxelLen = 2;                % Wheel Axle Length
@@ -39,18 +39,18 @@ sensor = IR_sensor;
 
 %% PID Controller
 controller = Controller;
-controller.kp = 0.05;             % Proportional 
+controller.kp = 0.5;             % Proportional 
 controller.ki = 0.1;             % Integral
 controller.kd = 0.01;              % Derivative
 controller.dt = controllerdt;
 controller.setpoint = 0;
-controller.saturationLimit = 0.25;
+controller.saturationLimit = 0.2;
 fig1=figure;hold all;
 
 graphZoomOnRobot = true;
 
 i = 1;
-t=0:simdt:30;
+t=0:simdt:15;
 for i=1:length(t)
     %do a sensor reading to get data
     sensor = sensor.buildSensor(robot.x, robot.y, robot.theta, SensorWidth, SensorDistanceFromRobotCenter);

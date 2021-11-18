@@ -16,12 +16,23 @@ classdef DDR
         baseSpd
         
         dt     % time step               
-        
+        y_filter = [];
+        x_filter = [];
+        FilterEnabled = 0;
     end
     
     methods % DDR Kinematics
-       
+        function obj = EnableAcutatorDelay(obj, Fs)
+            F = Fs/4;
+            n = 4;
+
+            [obj.y_filter,obj.x_filter] = butter(n,F/(Fs/2));
+            obj.FilterEnabled = 1;
+        end
         function obj = DDR_Kinematics(obj, baseSpeed, diffW)
+            if(obj.FilterEnabled)
+                diffW = filter(obj.y_filter,obj.x_filter,diffW);
+            end
             vr = baseSpeed + diffW;
             vl = baseSpeed - diffW;
             phi = obj.WheelRadius *(vr-vl)/(2*obj.AxelLen);
