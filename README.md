@@ -5,7 +5,7 @@ To use:
 * [DDR.m](DDR.m) is the class used to calculate differential drive vehicle kinematics
 * [IR_sensor.m](IR_sensor.m) is the class used to sense where the robot is relative to the track
 * [LineConstruct.m](LineConstruct.m) is the class used to build the track for the robot to follow 
-* [Interx.m] (InterX.m) is a set of functions used by the sensor to find distance from a path
+* [InterX.m](InterX.m) is a set of functions used by the sensor to find distance from a path
 
 <img src="docs/LineFollowTrack.gif" width="300"><br>
 <img src="docs/LineFollowTrackFull.gif" width="300">
